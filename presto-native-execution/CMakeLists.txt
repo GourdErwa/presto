@@ -15,6 +15,7 @@ cmake_minimum_required(VERSION 3.10)
 project(PrestoCpp)
 
 set(VELOX_ROOT ${CMAKE_BINARY_DIR}/velox)
+add_definitions("-DNDEBUG")
 
 execute_process(
   COMMAND
