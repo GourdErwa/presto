@@ -264,7 +264,9 @@ public class ConnectorManager
                 informationSchemaConnector.getConnectorId(),
                 informationSchemaConnector.getConnector(),
                 systemConnector.getConnectorId(),
-                systemConnector.getConnector());
+                systemConnector.getConnector())
+                .setConnectorName(factory.getName())
+                .setConfig(properties);
 
         try {
             addConnectorInternal(connector);

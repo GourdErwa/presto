@@ -10,7 +10,7 @@
 
     <groupId>com.facebook.presto</groupId>
     <artifactId>presto-root</artifactId>
-    <version>0.278-SNAPSHOT</version>
+    <version>0.278-norn</version>
     <packaging>pom</packaging>
 
     <name>presto-root</name>
@@ -39,6 +39,8 @@
         <air.check.skip-spotbugs>true</air.check.skip-spotbugs>
         <air.check.skip-pmd>true</air.check.skip-pmd>
         <air.checkstyle.config-file>src/checkstyle/presto-checks.xml</air.checkstyle.config-file>
+
+        <air.check.skip-checkstyle>true</air.check.skip-checkstyle>
 
         <air.java.version>1.8.0-151</air.java.version>
         <air.maven.version>3.3.9</air.maven.version>
@@ -190,6 +192,29 @@
         <module>presto-native-execution</module>
         <module>presto-router</module>
     </modules>
+
+    <repositories>
+        <repository>
+            <id>apache.datasketches.releases</id>
+            <url>https://repository.apache.org/content/repositories/releases</url>
+        </repository>
+
+        <repository>
+            <id>aliyun</id>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </repository>
+
+        <repository>
+            <id>repo1</id>
+            <url>https://repo1.maven.org/maven2/</url>
+        </repository>
+
+        <!-- https://docs.cloudera.com/documentation/enterprise/6/release-notes/topics/rg_cdh_63_maven_artifacts.html# -->
+        <repository>
+            <id>cloudera</id>
+            <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
+        </repository>
+    </repositories>
 
     <dependencyManagement>
         <dependencies>
@@ -2132,6 +2157,13 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-antrun-plugin</artifactId>
                     <version>1.8</version>
+                </plugin>
+
+                <!-- 父 pom 版本较低 -->
+                <plugin>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs-maven-plugin</artifactId>
+                    <version>4.2.3</version>
                 </plugin>
 
                 <plugin>

@@ -71,6 +71,7 @@ import com.facebook.presto.operator.ForScheduler;
 import com.facebook.presto.operator.OperatorInfo;
 import com.facebook.presto.resourcemanager.ForResourceManager;
 import com.facebook.presto.resourcemanager.ResourceManagerProxy;
+import com.facebook.presto.server.catalog.CatalogResource;
 import com.facebook.presto.server.protocol.ExecutingStatementResource;
 import com.facebook.presto.server.protocol.LocalQueryProvider;
 import com.facebook.presto.server.protocol.QueryBlockingRateLimiter;
@@ -163,6 +164,8 @@ public class CoordinatorModule
 
         // failure detector
         binder.install(new FailureDetectorModule());
+        // NORN 二次开发，注入 CatalogResource
+        jaxrsBinder(binder).bind(CatalogResource.class);
         jaxrsBinder(binder).bind(NodeResource.class);
         jaxrsBinder(binder).bind(WorkerResource.class);
         httpClientBinder(binder).bindHttpClient("workerInfo", ForWorkerInfo.class);

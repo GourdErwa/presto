@@ -1,0 +1,28 @@
+
+###
+DELETE http://localhost:8080/v1/catalog/bi_mysql_bi
+
+###
+GET http://localhost:8080/v1/catalog/
+
+###
+GET http://localhost:8080/v1/catalog/info/bi_mysql_bi
+
+###
+GET http://localhost:8080/v1/catalog/space/mysql
+
+###
+POST http://localhost:8080/v1/catalog/add
+Content-Type: application/json
+
+[
+  {
+    "catalogName": "bi_mysql_bi",
+    "connectorName": "mysql",
+    "properties": {
+      "connection-url": "jdbc:mysql://10.0.59.63:13306?noAccessToProcedureBodies=true&characterEncoding=UTF-8&connectTimeout=5000&useSSL=false&allowPublicKeyRetrieval=true",
+      "connection-user": "root",
+      "connection-password": "l0dljlxgVF8Cd2bJ"
+    }
+  }
+]

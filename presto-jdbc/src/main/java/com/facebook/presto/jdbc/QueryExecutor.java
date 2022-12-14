@@ -62,4 +62,9 @@ class QueryExecutor
         }
         return response.getValue();
     }
+
+    // NORN 二次开发，提供 httpclient 复用给 catalog client
+    public OkHttpClient getHttpClient() {
+        return httpClient;
+    }
 }

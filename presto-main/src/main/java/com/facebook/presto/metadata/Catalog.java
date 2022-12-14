@@ -16,6 +16,9 @@ package com.facebook.presto.metadata;
 import com.facebook.presto.spi.ConnectorId;
 import com.facebook.presto.spi.connector.Connector;
 
+import java.time.LocalDateTime;
+import java.util.Map;
+
 import static com.facebook.presto.metadata.MetadataUtil.checkCatalogName;
 import static com.google.common.base.MoreObjects.toStringHelper;
 import static java.util.Objects.requireNonNull;
@@ -31,6 +34,10 @@ public class Catalog
 
     private final ConnectorId systemTablesId;
     private final Connector systemTables;
+    // 新增原始配置记录
+    private Map<String, String> config;
+    private String connectorName;
+    private final LocalDateTime createTime = LocalDateTime.now();
 
     public Catalog(
             String catalogName,
@@ -82,6 +89,28 @@ public class Catalog
             return systemTables;
         }
         throw new IllegalArgumentException("Unknown connector id: " + connectorId);
+    }
+
+    public String getConnectorName() {
+        return connectorName;
+    }
+
+    public Catalog setConnectorName(String connectorName) {
+        this.connectorName = connectorName;
+        return this;
+    }
+
+    public Catalog setConfig(Map<String, String> config) {
+        this.config = config;
+        return this;
+    }
+
+    public Map<String, String> getConfig() {
+        return config;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
     }
 
     @Override

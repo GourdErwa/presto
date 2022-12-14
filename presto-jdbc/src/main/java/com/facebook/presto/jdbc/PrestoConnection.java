@@ -16,6 +16,7 @@ package com.facebook.presto.jdbc;
 import com.facebook.presto.client.ClientSession;
 import com.facebook.presto.client.ServerInfo;
 import com.facebook.presto.client.StatementClient;
+import com.facebook.presto.client.catalog.CatalogResourceClientV1;
 import com.facebook.presto.spi.security.SelectedRole;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Splitter;
@@ -96,6 +97,7 @@ public class PrestoConnection
     private final Map<String, SelectedRole> roles = new ConcurrentHashMap<>();
     private final AtomicReference<String> transactionId = new AtomicReference<>();
     private final QueryExecutor queryExecutor;
+    private final CatalogResourceClientV1 catalogResourceClientV1;
     private final WarningsManager warningsManager = new WarningsManager();
     private final List<QueryInterceptor> queryInterceptorInstances;
 
@@ -118,11 +120,17 @@ public class PrestoConnection
         this.queryExecutor = requireNonNull(queryExecutor, "queryExecutor is null");
         uri.getClientTags().ifPresent(tags -> clientInfo.put("ClientTags", tags));
 
+        // NORN 二次开发
+        this.catalogResourceClientV1 = new CatalogResourceClientV1(queryExecutor.getHttpClient(), uri.getHttpUri().toString());
         timeZoneId.set(uri.getTimeZoneId());
         locale.set(Locale.getDefault());
 
         this.queryInterceptorInstances = ImmutableList.copyOf(uri.getQueryInterceptors());
         initializeQueryInterceptors();
+    }
+
+    public CatalogResourceClientV1 getCatalogClientV1() {
+        return catalogResourceClientV1;
     }
 
     @Override
